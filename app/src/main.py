@@ -17,12 +17,17 @@ async def main():
 
 @app.post("/load-file")
 async def upload_file(file: UploadFile, session: AsyncSession = Depends(get_async_session)):
-    contents = await file.read()
-    path = save_image(contents, file.filename)
-    res = get_result_from_ml(path)
+    try:
+        contents = await file.read()
+        path = save_image(contents, file.filename)
+        
+        res = get_result_from_ml(path)
 
-    stmt = insert(result).values(file_name=file.filename, file_path=path, predict=res["class_name"])
-    await session.execute(stmt)
-    await session.commit()
+        stmt = insert(result).values(file_name=file.filename, file_path=path, predict=res["class_name"])
+        await session.execute(stmt)
+        await session.commit()
 
-    return res
+        return res
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
