@@ -38,3 +38,43 @@ async def upload_file(file: UploadFile, session: AsyncSession = Depends(get_asyn
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/results/{file_name}")
+async def get_results(file_name: str, session: AsyncSession = Depends(get_async_session)):
+    try:
+        stmt = select(result).where(result.c.file_name == file_name)
+        res = await session.execute(stmt)
+        analysis_result = res.fetchone()
+
+        if not analysis_result:
+            raise HTTPException(status_code=404, detail="File not found")
+
+        return {
+            "file_name": analysis_result.file_name,
+            "file_path": analysis_result.file_path,
+            "predict": analysis_result.predict,
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/files")
+async def get_files(session: AsyncSession = Depends(get_async_session)):
+    try:
+        stmt = select(result)
+        res = await session.execute(stmt)
+        files = res.fetchall()
+
+        file_list = [
+            {
+                "file_name": file.file_name,
+                "file_path": file.file_path,
+                "predict": file.predict
+            }
+            for file in files
+        ]
+
+        return file_list
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
