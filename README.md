@@ -11,15 +11,15 @@
 - Хранение загруженных изображений и метаданных об обработке.
 
 ## Основные технологии
-- **Язык разработки**: Python  
-- **Фреймворки**: FastAPI  
-- **База данных**: PostgreSQL  
-- **Документация API**: Swagger или Postman (пока что отсутствует)
+- **Язык разработки**: Python
+- **Фреймворки**: FastAPI
+- **База данных**: PostgreSQL
+- **Документация API**: Swagger
 
 ## Установка и настройка
 
 ### Требования
-- Python 3.8+
+- Python 3.10+
 - Установленные зависимости (см. `requirements.txt`)
 
 ### Установка
@@ -34,9 +34,13 @@
    pip install -r requirements.txt
    ```
 
-3. Запустите сервер:
+3. Установите рабочую директорию на папку `ML`
+
+4. Установите ссылку на локальную PostgreSQL базу данных в переменной `DB_URL`, например как `export DB_URL=postgresql+asyncpg://postgres:password@localhost:5432/database`
+
+5. Запустите сервер:
    ```bash
-   python main.py
+   uvicorn app.src.main:app --reload
    ```
 
 ## Использование API
