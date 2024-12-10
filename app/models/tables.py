@@ -10,5 +10,6 @@ result = Table(
     Column("file_name", String),
     Column("file_path", String),
     Column("predict", String),
+    Column("predict_file_path", String),
     Column("predict_date", DateTime, default=datetime.datetime.now)
 )
