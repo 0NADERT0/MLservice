@@ -23,7 +23,7 @@ app = FastAPI(title="ML-service", lifespan=lifespan)
 async def timeout_middleware(request: Request, call_next):
     try:
         start_time = asyncio.get_event_loop().time()
-        response = await asyncio.wait_for(call_next(request), timeout=0.1)
+        response = await asyncio.wait_for(call_next(request), timeout=10)
         process_time = asyncio.get_event_loop().time() - start_time
         response.headers["X-Process-Time"] = str(process_time)
         return response
