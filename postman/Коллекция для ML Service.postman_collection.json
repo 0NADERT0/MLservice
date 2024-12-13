@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "35d9c831-3550-4cba-98ab-2ba914170089",
+		"name": "Коллекция для ML Service",
+		"description": "## Использование API\nСервер предоставляет следующие эндпоинты:\n\n### 1. Загрузка изображения\n**POST** `/load-file`  \n\nЗагружает изображение на сервер для анализа.\nВозвращает результат обработки моделью + file_name для хранилища\n\n### 2. Получение результатов анализа\n**GET** `/results/{file_name}`\n\nВозвращает сохраненные результаты анализа.\n\n### 3. Получение списка изображений\n**GET** `/files`  \n\nВозвращает список всех загруженных изображений с метаданными.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9285773"
+	},
+	"item": [
+		{
+			"name": "Загрузить файл (/load-file)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": [
+								"/C:/Users/kolya5544/Downloads/dmg/1.jpg",
+								"/C:/Users/kolya5544/Downloads/dmg/2.jpg"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/load-file",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"load-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить результат анализа (/results/{{file_name}})",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/results/{{filename}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"results",
+						"{{filename}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить результат всех анализов (/files)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/files",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"files"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "filename",
+			"value": "1.jpg"
+		}
+	]
+}
